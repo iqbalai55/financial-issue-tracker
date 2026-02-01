@@ -22,7 +22,7 @@ export default function NewIssue() {
   const [loading, setLoading] = useState(false)
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: zodResolver(schema),
   })
 
