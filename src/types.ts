@@ -3,12 +3,23 @@ export type DatabaseUser = {
   email: string
 }
 
-export const statusColor = (status: string) => {
+export function statusColor(status: string) {
   switch (status) {
-    case 'pending': return 'bg-yellow-100 text-yellow-800'
-    case 'accepted': return 'bg-green-100 text-green-800'
-    case 'rejected': return 'bg-red-100 text-red-800'
-    case 'completed': return 'bg-blue-100 text-blue-800'
-    default: return 'bg-gray-100 text-gray-800'
+    case 'pending':
+      return 'bg-yellow-500 text-white'
+    case 'accepted':
+      return 'bg-green-500 text-white'
+    case 'rejected':
+      return 'bg-red-500 text-white'
+    case 'completed':
+      return 'bg-gray-500 text-white'
+    case 'need_revision':
+      return 'bg-orange-500 text-white'
+    case 'review_evidence':
+      return 'bg-indigo-500 text-white'
+    case 'need_revision':
+      return 'bg-purple-500 text-white' // warna baru untuk status on_hold
+    default:
+      return 'bg-gray-300 text-gray-700'
   }
 }

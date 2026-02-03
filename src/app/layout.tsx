@@ -1,7 +1,6 @@
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
-import "./globals.css"
-import Sidebar from "@/components/sidebar"
+import "./globals.css" // Global styles still apply everywhere
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,6 +17,7 @@ export const metadata: Metadata = {
   description: "Issue management app",
 }
 
+// ⚠️ CRITICAL: This layout MUST be minimal - NO sidebar structure!
 export default function RootLayout({
   children,
 }: {
@@ -25,18 +25,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <div className="flex min-h-screen">
-          {/* Sidebar */}
-          <Sidebar />
-
-          {/* Main content */}
-          <main className="flex-1 bg-gray-50 p-6">
-            {children}
-          </main>
-        </div>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        {children} {/* Children = route group layouts */}
       </body>
     </html>
   )

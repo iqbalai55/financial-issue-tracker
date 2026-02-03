@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { statusColor } from '@/types'
 import Link from 'next/link'
 
-const STATUSES = ['all', 'pending', 'accepted', 'rejected', 'completed'] as const
+const STATUSES = ['all', 'pending', 'accepted', 'rejected', 'completed', 'review_evidence', 'need_revision'] as const
 type Status = (typeof STATUSES)[number]
 
 interface Profile {
@@ -14,13 +14,18 @@ interface Profile {
 
 interface Issue {
     id: string
-    title: string        // kolom baru
+    title: string
     amount: number
     reason: string
     status: string
     created_at: string
     user_id: string
     profiles?: Profile
+}
+
+// Helper function untuk format status
+const formatStatus = (status: string) => {
+    return status.replace(/_/g, ' ').toUpperCase()
 }
 
 export function IssuesListClient() {
@@ -46,7 +51,6 @@ export function IssuesListClient() {
         }
     }
 
-
     useEffect(() => {
         fetchIssues(statusFilter)
     }, [statusFilter])
@@ -59,12 +63,13 @@ export function IssuesListClient() {
                     <button
                         key={s}
                         onClick={() => setStatusFilter(s)}
-                        className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium border transition-colors ${statusFilter === s
+                        className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
+                            statusFilter === s
                                 ? 'bg-blue-600 text-white border-blue-600'
                                 : 'bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200'
-                            }`}
+                        }`}
                     >
-                        {s.toUpperCase()}
+                        {formatStatus(s)} {/* ✅ Ganti sini */}
                     </button>
                 ))}
             </div>
@@ -82,7 +87,7 @@ export function IssuesListClient() {
                         {/* Header: title + amount + status */}
                         <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center mb-4 gap-2 sm:gap-0">
                             <div>
-                                <h3 className="font-bold text-base sm:text-lg text-gray-900">{issue.title}</h3> {/* title */}
+                                <h3 className="font-bold text-base sm:text-lg text-gray-900">{issue.title}</h3>
                                 <h4 className="font-semibold text-lg sm:text-xl text-gray-800 mt-1">
                                     Rp {issue.amount.toLocaleString()}
                                 </h4>
@@ -91,7 +96,7 @@ export function IssuesListClient() {
                             <span
                                 className={`px-3 py-1 rounded-full text-sm font-medium ${statusColor(issue.status)}`}
                             >
-                                {issue.status.toUpperCase()}
+                                {formatStatus(issue.status)} {/* ✅ Ganti sini juga */}
                             </span>
                         </div>
 
